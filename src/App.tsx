@@ -27,7 +27,9 @@ function App() {
               setTodoText(e.target.value)
             }
             onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) =>
-              e.key === "Enter" && addTodo(todoText)
+              e.key === "Enter" &&
+              todoText.trim().length > 0 &&
+              addTodo(todoText)
             }
             placeholder="What needs to be done?"
             autoFocus

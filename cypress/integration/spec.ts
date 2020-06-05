@@ -23,5 +23,16 @@ describe(`New todo`, () => {
     cy.get(".footer").should("be.visible");
   });
 
-  it(`should not create a todo if the text is empty after trimming`, () => {});
+  it(`should not create a todo if the text is empty after trimming`, () => {
+    cy.get(".todo-list")
+      .find("li")
+      .then(($todos) => {
+        const todoCount = $todos.length;
+
+        cy.get(".new-todo").type("{enter}");
+        cy.get(".todo-list").find("li").should("have.length", todoCount);
+        cy.get(".new-todo").type("  ").type("{enter}");
+        cy.get(".todo-list").find("li").should("have.length", todoCount);
+      });
+  });
 });
