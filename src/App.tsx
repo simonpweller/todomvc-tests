@@ -25,6 +25,10 @@ function App() {
       )
     );
   };
+  const toggleAll = () => {
+    const allCompleted = todos.every((todo) => todo.completed);
+    setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })));
+  };
 
   return (
     <>
@@ -50,7 +54,12 @@ function App() {
           className="main"
           style={{ display: hasTodos ? "block" : "none" }}
         >
-          <input id="toggle-all" className="toggle-all" type="checkbox" />
+          <input
+            id="toggle-all"
+            className="toggle-all"
+            type="checkbox"
+            onClick={toggleAll}
+          />
           <label htmlFor="toggle-all">Mark all as complete</label>
           <ul className="todo-list">
             {todos.map((todoItem) => (

@@ -42,7 +42,7 @@ describe(`New todo`, () => {
 });
 
 describe(`Marking todos as completed`, () => {
-  describe(`clicking the checkbox`, () => {
+  describe(`clicking the checkbox of an item`, () => {
     it(`should mark the todo as complete by updating its completed value and toggling the class completed on its parent <li>`, () => {
       cy.get(".toggle").click();
       cy.get(".toggle").should("be.checked");
@@ -53,6 +53,22 @@ describe(`Marking todos as completed`, () => {
       cy.get(".toggle").click();
       cy.get(".toggle").should("not.be.checked");
       cy.get("li").first().should("not.have.class", "completed");
+    });
+  });
+
+  describe(`clicking the mark all as complete checkbox`, () => {
+    before(() => {
+      cy.get(".new-todo").type("Learn React").type("{enter}");
+    });
+
+    it(`it should mark all items as completed`, () => {
+      cy.get(".toggle-all").click();
+      cy.get(".toggle").should("be.checked");
+    });
+
+    it(`should mark all items as not completed if they were all completed before`, () => {
+      cy.get(".toggle-all").click();
+      cy.get(".toggle").should("not.be.checked");
     });
   });
 });
