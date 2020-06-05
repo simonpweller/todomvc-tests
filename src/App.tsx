@@ -2,17 +2,28 @@ import React, { ChangeEvent, useState } from "react";
 import Todo from "./Todo";
 
 export type TodoItem = {
+  id: number;
   text: string;
+  completed: boolean;
 };
 
 function App() {
   const [todos, setTodos] = useState<Array<TodoItem>>([]);
   const [todoText, setTodoText] = useState("");
+  const [nextId, setNextId] = useState(1);
 
   const hasTodos = todos.length > 0;
   const addTodo = (text: string) => {
-    setTodos([...todos, { text }]);
+    setTodos([...todos, { id: nextId, text, completed: false }]);
     setTodoText("");
+    setNextId(nextId + 1);
+  };
+  const toggleTodoStatus = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
   };
 
   return (
@@ -43,7 +54,11 @@ function App() {
           <label htmlFor="toggle-all">Mark all as complete</label>
           <ul className="todo-list">
             {todos.map((todoItem) => (
-              <Todo {...todoItem} />
+              <Todo
+                key={todoItem.id}
+                todoItem={todoItem}
+                toggleCompleted={toggleTodoStatus.bind(null, todoItem.id)}
+              />
             ))}
           </ul>
         </section>

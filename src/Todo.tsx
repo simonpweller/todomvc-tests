@@ -1,11 +1,21 @@
 import React from "react";
 import { TodoItem } from "./App";
 
-const Todo = (todoItem: TodoItem) => {
+type TodoProps = {
+  todoItem: TodoItem;
+  toggleCompleted: () => void;
+};
+
+const Todo = ({ todoItem, toggleCompleted }: TodoProps) => {
   return (
-    <li>
+    <li className={todoItem.completed ? "completed" : ""}>
       <div className="view">
-        <input className="toggle" type="checkbox" />
+        <input
+          className="toggle"
+          type="checkbox"
+          checked={todoItem.completed}
+          onClick={toggleCompleted}
+        />
         <label>{todoItem.text}</label>
         <button className="destroy" />
       </div>
