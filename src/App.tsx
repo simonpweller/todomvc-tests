@@ -13,6 +13,8 @@ function App() {
   const [nextId, setNextId] = useState(1);
 
   const hasTodos = todos.length > 0;
+  const allCompleted = todos.every((todo) => todo.completed);
+
   const addTodo = (text: string) => {
     setTodos([...todos, { id: nextId, text, completed: false }]);
     setTodoText("");
@@ -26,7 +28,6 @@ function App() {
     );
   };
   const toggleAll = () => {
-    const allCompleted = todos.every((todo) => todo.completed);
     setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })));
   };
 
@@ -59,6 +60,7 @@ function App() {
             className="toggle-all"
             type="checkbox"
             onClick={toggleAll}
+            checked={allCompleted}
           />
           <label htmlFor="toggle-all">Mark all as complete</label>
           <ul className="todo-list">

@@ -70,5 +70,24 @@ describe(`Marking todos as completed`, () => {
       cy.get(".toggle-all").click();
       cy.get(".toggle").should("not.be.checked");
     });
+
+    it(`should update as individual items are marked as completed`, () => {
+      cy.get(".toggle-all").should("not.be.checked");
+      cy.get(".toggle").first().click();
+      cy.get(".toggle-all").should("not.be.checked");
+      cy.get(".toggle").eq(1).click();
+      cy.get(".toggle-all").should("be.checked");
+    });
+
+    describe(`when some items were marked as completed, but not others`, () => {
+      before(() => {
+        cy.get(".toggle").first().click();
+        cy.get(".toggle-all").should("not.be.checked");
+      });
+      it(`should mark all items as completed`, () => {
+        cy.get(".toggle-all").click();
+        cy.get(".toggle").should("be.checked");
+      });
+    });
   });
 });
