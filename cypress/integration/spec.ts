@@ -36,3 +36,13 @@ describe(`New todo`, () => {
       });
   });
 });
+
+describe(`Marking todos as completed`, () => {
+  describe(`clicking the checkbox`, () => {
+    it(`should mark the todo as complete by updating its completed value and toggling the class completed on its parent <li>`, () => {
+      cy.get(".toggle").click();
+      cy.get(".toggle").should("be.checked");
+      cy.get("li").first().should("have.class", "completed");
+    });
+  });
+});
