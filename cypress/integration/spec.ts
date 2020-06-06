@@ -12,13 +12,13 @@ describe(`New todo`, () => {
   });
 
   it(`should create the todo, append it to the todo list, and clear the input when enter is pressed`, () => {
-    cy.get(".new-todo").type("Learn javascript").type("{enter}");
+    cy.get(".new-todo").type("Learn JavaScript").type("{enter}");
 
     cy.get(".todo-list").find("li").should("have.length", 1);
     cy.get(".todo-list")
       .find("li")
       .first()
-      .should("contain", "Learn javascript");
+      .should("contain", "Learn JavaScript");
     cy.get(".new-todo").should("have.value", "");
     cy.get(".toggle").should("not.be.checked");
     cy.get("li").first().should("not.have.class", "completed");
@@ -104,6 +104,23 @@ describe(`Marking todos as completed`, () => {
     it(`should read "2 item left" if there are two active items`, () => {
       cy.get(".toggle").eq(1).click();
       cy.get(".todo-count").contains("2 items left");
+    });
+  });
+
+  describe(`clicking remove button`, () => {
+    after(() => {
+      cy.get(".todo-list li").then(($li) => {
+        if ($li.length === 1) {
+          cy.get(".new-todo").type("Learn React").type("{enter}");
+        }
+      });
+    });
+
+    it(`should remove the corresponding item`, () => {
+      cy.get(".todo-list").find("li").should("have.length", 2);
+      cy.get(".destroy").eq(1).click({ force: true }); // unfortunately necessary https://docs.cypress.io/api/commands/hover.html#Workarounds
+      cy.get(".todo-list").find("li").should("have.length", 1);
+      cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
     });
   });
 });

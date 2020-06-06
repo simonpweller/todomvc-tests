@@ -28,6 +28,9 @@ function App() {
       )
     );
   };
+  const deleteTodoItem = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
   const toggleAll = () => {
     setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })));
   };
@@ -70,6 +73,7 @@ function App() {
                 key={todoItem.id}
                 todoItem={todoItem}
                 toggleCompleted={toggleTodoStatus.bind(null, todoItem.id)}
+                deleteTodoItem={deleteTodoItem.bind(null, todoItem.id)}
               />
             ))}
           </ul>

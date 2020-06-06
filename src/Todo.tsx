@@ -4,9 +4,10 @@ import { TodoItem } from "./App";
 type TodoProps = {
   todoItem: TodoItem;
   toggleCompleted: () => void;
+  deleteTodoItem: () => void;
 };
 
-const Todo = ({ todoItem, toggleCompleted }: TodoProps) => {
+const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
   return (
     <li className={todoItem.completed ? "completed" : ""}>
       <div className="view">
@@ -17,7 +18,7 @@ const Todo = ({ todoItem, toggleCompleted }: TodoProps) => {
           onClick={toggleCompleted}
         />
         <label>{todoItem.text}</label>
-        <button className="destroy" />
+        <button className="destroy" onClick={deleteTodoItem} />
       </div>
       <input className="edit" value={todoItem.text} />
     </li>
