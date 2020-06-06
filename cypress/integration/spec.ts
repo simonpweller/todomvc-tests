@@ -90,4 +90,20 @@ describe(`Marking todos as completed`, () => {
       });
     });
   });
+
+  describe(`counter`, () => {
+    it(`should read "0 items left" if there are no active items`, () => {
+      cy.get(".todo-count").contains("0 items left");
+    });
+
+    it(`should read "1 item left" if there is one active item`, () => {
+      cy.get(".toggle").first().click();
+      cy.get(".todo-count").contains("1 item left");
+    });
+
+    it(`should read "2 item left" if there are two active items`, () => {
+      cy.get(".toggle").eq(1).click();
+      cy.get(".todo-count").contains("2 items left");
+    });
+  });
 });
