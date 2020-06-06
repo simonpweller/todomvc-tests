@@ -14,6 +14,7 @@ function App() {
 
   const hasTodos = todos.length > 0;
   const allCompleted = todos.every((todo) => todo.completed);
+  const activeTodoCount = todos.filter((todo) => !todo.completed).length;
 
   const addTodo = (text: string) => {
     setTodos([...todos, { id: nextId, text, completed: false }]);
@@ -78,7 +79,8 @@ function App() {
           style={{ display: hasTodos ? "block" : "none" }}
         >
           <span className="todo-count">
-            <strong>0</strong> item left
+            <strong>{activeTodoCount}</strong>{" "}
+            {activeTodoCount === 1 ? "item" : "items"} left
           </span>
           <ul className="filters">
             <li>
