@@ -123,4 +123,24 @@ describe(`Marking todos as completed`, () => {
       cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
     });
   });
+
+  describe(`clear completed button`, () => {
+    before(() => {
+      cy.get(".toggle").eq(1).click();
+    });
+
+    after(() => {
+      cy.get(".todo-list li").then(($li) => {
+        if ($li.length === 1) {
+          cy.get(".new-todo").type("Learn React").type("{enter}");
+        }
+      });
+    });
+
+    it(`should remove completed todos when clicked`, () => {
+      cy.get(".clear-completed").click();
+      cy.get(".todo-list").find("li").should("have.length", 1);
+      cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
+    });
+  });
 });

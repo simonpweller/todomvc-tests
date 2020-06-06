@@ -31,6 +31,9 @@ function App() {
   const deleteTodoItem = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
+  const clearCompleted = () => {
+    setTodos(todos.filter((todo) => !todo.completed));
+  };
   const toggleAll = () => {
     setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })));
   };
@@ -99,7 +102,9 @@ function App() {
               <a href="#/completed">Completed</a>
             </li>
           </ul>
-          <button className="clear-completed">Clear completed</button>
+          <button className="clear-completed" onClick={clearCompleted}>
+            Clear completed
+          </button>
         </footer>
       </section>
       <footer className="info">
