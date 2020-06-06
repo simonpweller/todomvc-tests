@@ -155,6 +155,7 @@ describe(`editing`, () => {
       cy.get(".todo-list li").first().should("not.have.class", "editing");
       cy.get(".todo-list label").first().dblclick();
       cy.get(".todo-list li").first().should("have.class", "editing");
+      cy.get(".todo-list .edit").first().should("have.focus");
     });
   });
 });

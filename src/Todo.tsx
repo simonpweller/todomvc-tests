@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TodoItem } from "./App";
 
 type TodoProps = {
@@ -8,7 +8,13 @@ type TodoProps = {
 };
 
 const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
+  const input = useRef<HTMLInputElement>(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  useEffect(() => {
+    if (isEditMode) {
+      input?.current?.focus();
+    }
+  }, [isEditMode]);
   return (
     <li
       className={`${todoItem.completed ? "completed" : ""} ${
@@ -27,7 +33,7 @@ const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
         </label>
         <button className="destroy" onClick={deleteTodoItem} />
       </div>
-      <input className="edit" value={todoItem.text} />
+      <input className="edit" value={todoItem.text} ref={input} />
     </li>
   );
 };
