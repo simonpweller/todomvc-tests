@@ -142,5 +142,9 @@ describe(`Marking todos as completed`, () => {
       cy.get(".todo-list").find("li").should("have.length", 1);
       cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
     });
+
+    it(`should be hidden when there are no completed todos`, () => {
+      cy.get(".clear-completed").should("be.hidden");
+    });
   });
 });

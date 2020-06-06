@@ -13,6 +13,7 @@ function App() {
   const [nextId, setNextId] = useState(1);
 
   const hasTodos = todos.length > 0;
+  const anyCompleted = todos.some((todo) => todo.completed);
   const allCompleted = todos.every((todo) => todo.completed);
   const activeTodoCount = todos.filter((todo) => !todo.completed).length;
 
@@ -102,7 +103,11 @@ function App() {
               <a href="#/completed">Completed</a>
             </li>
           </ul>
-          <button className="clear-completed" onClick={clearCompleted}>
+          <button
+            className="clear-completed"
+            onClick={clearCompleted}
+            style={{ display: anyCompleted ? "block" : "none" }}
+          >
             Clear completed
           </button>
         </footer>
