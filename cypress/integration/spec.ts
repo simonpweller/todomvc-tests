@@ -90,61 +90,61 @@ describe(`Marking todos as completed`, () => {
       });
     });
   });
+});
 
-  describe(`counter`, () => {
-    it(`should read "0 items left" if there are no active items`, () => {
-      cy.get(".todo-count").contains("0 items left");
-    });
+describe(`counter`, () => {
+  it(`should read "0 items left" if there are no active items`, () => {
+    cy.get(".todo-count").contains("0 items left");
+  });
 
-    it(`should read "1 item left" if there is one active item`, () => {
-      cy.get(".toggle").first().click();
-      cy.get(".todo-count").contains("1 item left");
-    });
+  it(`should read "1 item left" if there is one active item`, () => {
+    cy.get(".toggle").first().click();
+    cy.get(".todo-count").contains("1 item left");
+  });
 
-    it(`should read "2 item left" if there are two active items`, () => {
-      cy.get(".toggle").eq(1).click();
-      cy.get(".todo-count").contains("2 items left");
+  it(`should read "2 item left" if there are two active items`, () => {
+    cy.get(".toggle").eq(1).click();
+    cy.get(".todo-count").contains("2 items left");
+  });
+});
+
+describe(`clicking remove button`, () => {
+  after(() => {
+    cy.get(".todo-list li").then(($li) => {
+      if ($li.length === 1) {
+        cy.get(".new-todo").type("Learn React").type("{enter}");
+      }
     });
   });
 
-  describe(`clicking remove button`, () => {
-    after(() => {
-      cy.get(".todo-list li").then(($li) => {
-        if ($li.length === 1) {
-          cy.get(".new-todo").type("Learn React").type("{enter}");
-        }
-      });
-    });
+  it(`should remove the corresponding item`, () => {
+    cy.get(".todo-list").find("li").should("have.length", 2);
+    cy.get(".destroy").eq(1).click({ force: true }); // unfortunately necessary https://docs.cypress.io/api/commands/hover.html#Workarounds
+    cy.get(".todo-list").find("li").should("have.length", 1);
+    cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
+  });
+});
 
-    it(`should remove the corresponding item`, () => {
-      cy.get(".todo-list").find("li").should("have.length", 2);
-      cy.get(".destroy").eq(1).click({ force: true }); // unfortunately necessary https://docs.cypress.io/api/commands/hover.html#Workarounds
-      cy.get(".todo-list").find("li").should("have.length", 1);
-      cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
+describe(`clear completed button`, () => {
+  before(() => {
+    cy.get(".toggle").eq(1).click();
+  });
+
+  after(() => {
+    cy.get(".todo-list li").then(($li) => {
+      if ($li.length === 1) {
+        cy.get(".new-todo").type("Learn React").type("{enter}");
+      }
     });
   });
 
-  describe(`clear completed button`, () => {
-    before(() => {
-      cy.get(".toggle").eq(1).click();
-    });
+  it(`should remove completed todos when clicked`, () => {
+    cy.get(".clear-completed").click();
+    cy.get(".todo-list").find("li").should("have.length", 1);
+    cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
+  });
 
-    after(() => {
-      cy.get(".todo-list li").then(($li) => {
-        if ($li.length === 1) {
-          cy.get(".new-todo").type("Learn React").type("{enter}");
-        }
-      });
-    });
-
-    it(`should remove completed todos when clicked`, () => {
-      cy.get(".clear-completed").click();
-      cy.get(".todo-list").find("li").should("have.length", 1);
-      cy.get(".todo-list").find("li").should("contain", "Learn JavaScript");
-    });
-
-    it(`should be hidden when there are no completed todos`, () => {
-      cy.get(".clear-completed").should("be.hidden");
-    });
+  it(`should be hidden when there are no completed todos`, () => {
+    cy.get(".clear-completed").should("be.hidden");
   });
 });
