@@ -148,3 +148,13 @@ describe(`clear completed button`, () => {
     cy.get(".clear-completed").should("be.hidden");
   });
 });
+
+describe(`editing`, () => {
+  describe(`double clicking the label of a todo`, () => {
+    it(`should activate editing mode`, () => {
+      cy.get(".todo-list li").first().should("not.have.class", "editing");
+      cy.get(".todo-list label").first().dblclick();
+      cy.get(".todo-list li").first().should("have.class", "editing");
+    });
+  });
+});

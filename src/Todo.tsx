@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { TodoItem } from "./App";
 
 type TodoProps = {
@@ -8,8 +8,13 @@ type TodoProps = {
 };
 
 const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
+  const [isEditMode, setIsEditMode] = useState(false);
   return (
-    <li className={todoItem.completed ? "completed" : ""}>
+    <li
+      className={`${todoItem.completed ? "completed" : ""} ${
+        isEditMode ? "editing" : ""
+      }`.trim()}
+    >
       <div className="view">
         <input
           className="toggle"
@@ -17,7 +22,9 @@ const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
           checked={todoItem.completed}
           onClick={toggleCompleted}
         />
-        <label>{todoItem.text}</label>
+        <label onDoubleClick={setIsEditMode.bind(null, true)}>
+          {todoItem.text}
+        </label>
         <button className="destroy" onClick={deleteTodoItem} />
       </div>
       <input className="edit" value={todoItem.text} />
