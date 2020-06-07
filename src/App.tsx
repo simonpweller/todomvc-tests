@@ -22,7 +22,7 @@ function App() {
     setTodoText("");
     setNextId(nextId + 1);
   };
-  const toggleTodoStatus = (id: number) => {
+  const toggleCompleted = (id: number) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -82,9 +82,9 @@ function App() {
               <Todo
                 key={todoItem.id}
                 todoItem={todoItem}
-                toggleCompleted={toggleTodoStatus.bind(null, todoItem.id)}
+                toggleCompleted={toggleCompleted}
                 updateTodoItem={updateTodoItem}
-                deleteTodoItem={deleteTodoItem.bind(null, todoItem.id)}
+                deleteTodoItem={deleteTodoItem}
               />
             ))}
           </ul>

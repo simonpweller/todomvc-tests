@@ -3,9 +3,9 @@ import { TodoItem } from "./App";
 
 type TodoProps = {
   todoItem: TodoItem;
-  toggleCompleted: () => void;
+  toggleCompleted: (id: number) => void;
   updateTodoItem: (todoItem: TodoItem) => void;
-  deleteTodoItem: () => void;
+  deleteTodoItem: (id: number) => void;
 };
 
 const Todo = ({
@@ -38,12 +38,15 @@ const Todo = ({
           className="toggle"
           type="checkbox"
           checked={todoItem.completed}
-          onClick={toggleCompleted}
+          onClick={toggleCompleted.bind(null, todoItem.id)}
         />
         <label onDoubleClick={setIsEditMode.bind(null, true)}>
           {todoItem.text}
         </label>
-        <button className="destroy" onClick={deleteTodoItem} />
+        <button
+          className="destroy"
+          onClick={deleteTodoItem.bind(null, todoItem.id)}
+        />
       </div>
       <input
         className="edit"
