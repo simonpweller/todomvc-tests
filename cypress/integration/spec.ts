@@ -191,4 +191,13 @@ describe(`editing mode`, () => {
     cy.get(".todo-list li").should("have.length", 1);
     cy.get(".todo-list label").should("have.text", "Learn JavaScript properly");
   });
+
+  it(`should discard edits if escape is pressed`, () => {
+    cy.get(".todo-list label").dblclick();
+    cy.get(".todo-list .edit").type("again").type("{esc}");
+    cy.get(".todo-list li").should("not.have.class", "editing");
+    cy.get(".todo-list")
+      .find("label")
+      .should("have.text", "Learn JavaScript properly");
+  });
 });

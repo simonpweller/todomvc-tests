@@ -21,9 +21,15 @@ const Todo = ({
     setIsEditMode(false);
     if (editedText.trim().length > 0) {
       updateTodoItem({ ...todoItem, text: editedText.trim() });
+      setEditedText(editedText.trim());
     } else {
       deleteTodoItem(todoItem.id);
     }
+  };
+  const cancelEditing = () => {
+    console.log("cancelEditing");
+    setIsEditMode(false);
+    setEditedText(todoItem.text);
   };
 
   useEffect(() => {
@@ -63,6 +69,11 @@ const Todo = ({
         onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
           if (e.key === "Enter") {
             finishEditing();
+          }
+        }}
+        onKeyUp={(e) => {
+          if (e.key === "Escape") {
+            cancelEditing();
           }
         }}
       />
