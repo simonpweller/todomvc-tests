@@ -38,7 +38,7 @@ const Todo = ({
           className="toggle"
           type="checkbox"
           checked={todoItem.completed}
-          onClick={toggleCompleted.bind(null, todoItem.id)}
+          onChange={toggleCompleted.bind(null, todoItem.id)}
         />
         <label onDoubleClick={setIsEditMode.bind(null, true)}>
           {todoItem.text}
