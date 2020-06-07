@@ -19,7 +19,7 @@ const Todo = ({
   const [editedText, setEditedText] = useState(todoItem.text);
   const finishEditing = () => {
     setIsEditMode(false);
-    updateTodoItem({ ...todoItem, text: editedText });
+    updateTodoItem({ ...todoItem, text: editedText.trim() });
   };
 
   useEffect(() => {

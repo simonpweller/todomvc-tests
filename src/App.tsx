@@ -17,10 +17,15 @@ function App() {
   const allCompleted = todos.every((todo) => todo.completed);
   const activeTodoCount = todos.filter((todo) => !todo.completed).length;
 
-  const addTodo = (text: string) => {
-    setTodos([...todos, { id: nextId, text, completed: false }]);
-    setTodoText("");
-    setNextId(nextId + 1);
+  const addTodo = () => {
+    if (todoText.trim().length > 0) {
+      setTodos([
+        ...todos,
+        { id: nextId, text: todoText.trim(), completed: false },
+      ]);
+      setTodoText("");
+      setNextId(nextId + 1);
+    }
   };
   const toggleCompleted = (id: number) => {
     setTodos(
@@ -57,10 +62,9 @@ function App() {
               setTodoText(e.target.value)
             }
             onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) =>
-              e.key === "Enter" &&
-              todoText.trim().length > 0 &&
-              addTodo(todoText)
+              e.key === "Enter" && addTodo()
             }
+            onBlur={addTodo}
             placeholder="What needs to be done?"
             autoFocus
           />
