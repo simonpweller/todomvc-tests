@@ -56,6 +56,11 @@ const Todo = ({
           setEditedText(e.target.value)
         }
         onBlur={finishEditing}
+        onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+          if (e.key === "Enter") {
+            finishEditing();
+          }
+        }}
       />
     </li>
   );

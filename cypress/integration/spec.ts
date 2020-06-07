@@ -166,5 +166,21 @@ describe(`editing`, () => {
         .first()
         .should("contain", "Learn JavaScript properly");
     });
+
+    it(`should activate editing mode, saving the updated todo on enter`, () => {
+      cy.get(".todo-list li").eq(1).should("not.have.class", "editing");
+
+      cy.get(".todo-list label").eq(1).dblclick();
+      cy.get(".todo-list li").eq(1).should("have.class", "editing");
+      cy.get(".todo-list .edit").eq(1).should("have.focus");
+
+      cy.get(".todo-list .edit").eq(1).type(" properly").type("{enter}");
+
+      cy.get(".todo-list li").eq(1).should("not.have.class", "editing");
+      cy.get(".todo-list")
+        .find("li")
+        .eq(1)
+        .should("contain", "Learn React properly");
+    });
   });
 });
