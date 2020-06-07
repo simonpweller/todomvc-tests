@@ -184,4 +184,11 @@ describe(`editing mode`, () => {
       .eq(1)
       .should("have.text", "Learn React properly");
   });
+
+  it(`should destroy the todo if it is empty after trimming`, () => {
+    cy.get(".todo-list label").eq(1).dblclick();
+    cy.get(".todo-list .edit").eq(1).clear().type(" ").type("{enter}");
+    cy.get(".todo-list li").should("have.length", 1);
+    cy.get(".todo-list label").should("have.text", "Learn JavaScript properly");
+  });
 });
