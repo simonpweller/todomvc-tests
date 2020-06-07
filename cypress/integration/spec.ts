@@ -155,38 +155,33 @@ describe(`clear completed button`, () => {
   });
 });
 
-describe(`editing`, () => {
-  describe(`double clicking the label of a todo`, () => {
-    it(`should activate editing mode, saving the trimmed & updated todo on blur`, () => {
-      cy.get(".todo-list li").first().should("not.have.class", "editing");
+describe(`editing mode`, () => {
+  it(`should activate on double click`, () => {
+    cy.get(".todo-list li").first().should("not.have.class", "editing");
 
-      cy.get(".todo-list label").first().dblclick();
-      cy.get(".todo-list li").first().should("have.class", "editing");
-      cy.get(".todo-list .edit").first().should("have.focus");
+    cy.get(".todo-list label").first().dblclick();
+    cy.get(".todo-list li").first().should("have.class", "editing");
+    cy.get(".todo-list .edit").first().should("have.focus");
+  });
 
-      cy.get(".todo-list .edit").first().type(" properly ").blur();
+  it(`should save the trimmed todo on blur`, () => {
+    cy.get(".todo-list .edit").first().type(" properly ").blur();
 
-      cy.get(".todo-list li").first().should("not.have.class", "editing");
-      cy.get(".todo-list")
-        .find("label")
-        .first()
-        .should("have.text", "Learn JavaScript properly");
-    });
+    cy.get(".todo-list li").first().should("not.have.class", "editing");
+    cy.get(".todo-list")
+      .find("label")
+      .first()
+      .should("have.text", "Learn JavaScript properly");
+  });
 
-    it(`should activate editing mode, saving the trimmed & updated todo on enter`, () => {
-      cy.get(".todo-list li").eq(1).should("not.have.class", "editing");
+  it(`should save the trimmed todo on enter`, () => {
+    cy.get(".todo-list label").eq(1).dblclick();
+    cy.get(".todo-list .edit").eq(1).type(" properly ").type("{enter}");
 
-      cy.get(".todo-list label").eq(1).dblclick();
-      cy.get(".todo-list li").eq(1).should("have.class", "editing");
-      cy.get(".todo-list .edit").eq(1).should("have.focus");
-
-      cy.get(".todo-list .edit").eq(1).type(" properly ").type("{enter}");
-
-      cy.get(".todo-list li").eq(1).should("not.have.class", "editing");
-      cy.get(".todo-list")
-        .find("label")
-        .eq(1)
-        .should("have.text", "Learn React properly");
-    });
+    cy.get(".todo-list li").eq(1).should("not.have.class", "editing");
+    cy.get(".todo-list")
+      .find("label")
+      .eq(1)
+      .should("have.text", "Learn React properly");
   });
 });
