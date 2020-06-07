@@ -151,11 +151,20 @@ describe(`clear completed button`, () => {
 
 describe(`editing`, () => {
   describe(`double clicking the label of a todo`, () => {
-    it(`should activate editing mode`, () => {
+    it(`should activate editing mode, saving the updated todo on blur`, () => {
       cy.get(".todo-list li").first().should("not.have.class", "editing");
+
       cy.get(".todo-list label").first().dblclick();
       cy.get(".todo-list li").first().should("have.class", "editing");
       cy.get(".todo-list .edit").first().should("have.focus");
+
+      cy.get(".todo-list .edit").first().type(" properly").blur();
+
+      cy.get(".todo-list li").first().should("not.have.class", "editing");
+      cy.get(".todo-list")
+        .find("li")
+        .first()
+        .should("contain", "Learn JavaScript properly");
     });
   });
 });

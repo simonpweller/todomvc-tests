@@ -4,12 +4,24 @@ import { TodoItem } from "./App";
 type TodoProps = {
   todoItem: TodoItem;
   toggleCompleted: () => void;
+  updateTodoItem: (todoItem: TodoItem) => void;
   deleteTodoItem: () => void;
 };
 
-const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
+const Todo = ({
+  todoItem,
+  toggleCompleted,
+  updateTodoItem,
+  deleteTodoItem,
+}: TodoProps) => {
   const input = useRef<HTMLInputElement>(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [editedText, setEditedText] = useState(todoItem.text);
+  const finishEditing = () => {
+    setIsEditMode(false);
+    updateTodoItem({ ...todoItem, text: editedText });
+  };
+
   useEffect(() => {
     if (isEditMode) {
       input?.current?.focus();
@@ -33,7 +45,15 @@ const Todo = ({ todoItem, toggleCompleted, deleteTodoItem }: TodoProps) => {
         </label>
         <button className="destroy" onClick={deleteTodoItem} />
       </div>
-      <input className="edit" value={todoItem.text} ref={input} />
+      <input
+        className="edit"
+        value={editedText}
+        ref={input}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setEditedText(e.target.value)
+        }
+        onBlur={finishEditing}
+      />
     </li>
   );
 };

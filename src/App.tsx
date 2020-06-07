@@ -29,6 +29,12 @@ function App() {
       )
     );
   };
+  const updateTodoItem = (todoItem: TodoItem) => {
+    const nextTodos = [...todos];
+    const todoItemIndex = todos.findIndex((todo) => todo.id === todoItem.id);
+    nextTodos.splice(todoItemIndex, 1, todoItem);
+    setTodos(nextTodos);
+  };
   const deleteTodoItem = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
@@ -77,6 +83,7 @@ function App() {
                 key={todoItem.id}
                 todoItem={todoItem}
                 toggleCompleted={toggleTodoStatus.bind(null, todoItem.id)}
+                updateTodoItem={updateTodoItem}
                 deleteTodoItem={deleteTodoItem.bind(null, todoItem.id)}
               />
             ))}
