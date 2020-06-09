@@ -1,23 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains a test suite to validate a TodoMVC implementation.
 
-## Available Scripts
+You can learn more about TodoMVC and check out reference implementations at [http://todomvc.com/](http://todomvc.com/)
+
+This test suite is based on the [app spec](https://github.com/tastejs/todomvc/blob/master/app-spec.md)
+
+## Installing dependencies
+
+In the project directory, run:
+
+`npm install`
+
+Installing Cypress will take a little while. That's normal. 
+
+## Running the tests
 
 In the project directory, you can run:
 
-### `npm start`
+`npm test`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Make sure your app is running on [http://localhost:3000](http://localhost:3000) before starting the tests. If your app is running on a different port or domain, configure the baseUrl in [cypress.json](./cypress.json)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Running the tests continuously 
 
-### `npm run build`
+`npm run test-dev`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This will keep the tests running, so you can continuously re-test your app as you make changes.
