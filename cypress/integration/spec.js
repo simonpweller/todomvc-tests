@@ -201,3 +201,72 @@ describe(`editing mode`, () => {
       .should("have.text", "Learn JavaScript properly");
   });
 });
+
+describe(`persistence`, () => {
+  it(`should persist todos across reloads`, () => {
+    cy.get(".new-todo").type("Learn React ").blur();
+    cy.get(".toggle").last().click();
+
+    cy.visit("/");
+    cy.get(".todo-list li").should("have.length", 2);
+    cy.get("li").first().should("not.have.class", "completed");
+    cy.get("li").last().should("not.have.class", "completed");
+  });
+
+  it(`should not persist edit mode across reloads`, () => {
+    cy.get(".toggle").first().click().click(); // give Cypress a chance to re-populate local storage
+    cy.get(".todo-list label").first().dblclick();
+
+    cy.get(".todo-list li").first().should("have.class", "editing");
+
+    cy.visit("/");
+
+    cy.get(".todo-list li").first().should("not.have.class", "editing");
+  });
+});
+
+describe(`filters`, () => {
+  describe(`selecting active filter`, () => {
+    it(`should filter out completed todos`, () => {
+      cy.get(`.filters a[href="#/active"]`).click();
+      cy.get(".todo-list li").should("have.length", 1);
+      cy.get(".todo-list li").should("have.text", "Learn JavaScript properly");
+      cy.get(`.filters a[href="#/"]`).should("not.have.class", "selected");
+      cy.get(`.filters a[href="#/active"]`).should("have.class", "selected");
+      cy.get(`.filters a[href="#/completed"]`).should(
+          "not.have.class",
+          "selected"
+      );
+    });
+  });
+
+  describe(`selecting completed filter`, () => {
+    it(`should filter out active todos`, () => {
+      cy.get(`.filters a[href="#/completed"]`).click();
+      cy.get(".todo-list li").should("have.length", 1);
+      cy.get(".todo-list li").should("have.text", "Learn React");
+      cy.get(`.filters a[href="#/"]`).should("not.have.class", "selected");
+      cy.get(`.filters a[href="#/active"]`).should(
+          "not.have.class",
+          "selected"
+      );
+      cy.get(`.filters a[href="#/completed"]`).should("have.class", "selected");
+    });
+  });
+
+  describe(`selecting all`, () => {
+    it(`should display all todos`, () => {
+      cy.get(`.filters a[href="#/"]`).click();
+      cy.get(".todo-list li").should("have.length", 2);
+      cy.get(`.filters a[href="#/"]`).should("have.class", "selected");
+      cy.get(`.filters a[href="#/active"]`).should(
+          "not.have.class",
+          "selected"
+      );
+      cy.get(`.filters a[href="#/completed"]`).should(
+          "not.have.class",
+          "selected"
+      );
+    });
+  });
+});
