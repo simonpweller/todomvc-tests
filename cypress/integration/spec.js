@@ -151,7 +151,7 @@ describe(`clear completed button`, () => {
   });
 
   it(`should be hidden when there are no completed todos`, () => {
-    cy.get(".clear-completed").should("be.hidden");
+    cy.get(".clear-completed").should("not.be.visible");
   });
 });
 
