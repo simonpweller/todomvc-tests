@@ -230,7 +230,7 @@ describe(`filters`, () => {
     it(`should filter out completed todos`, () => {
       cy.get(`.filters a[href="#/active"]`).click();
       cy.get(".todo-list li").should("have.length", 1);
-      cy.get(".todo-list li").should("have.text", "Learn JavaScript properly");
+      cy.get(".todo-list label").should("have.text", "Learn JavaScript properly");
       cy.get(`.filters a[href="#/"]`).should("not.have.class", "selected");
       cy.get(`.filters a[href="#/active"]`).should("have.class", "selected");
       cy.get(`.filters a[href="#/completed"]`).should(
@@ -244,7 +244,7 @@ describe(`filters`, () => {
     it(`should filter out active todos`, () => {
       cy.get(`.filters a[href="#/completed"]`).click();
       cy.get(".todo-list li").should("have.length", 1);
-      cy.get(".todo-list li").should("have.text", "Learn React");
+      cy.get(".todo-list label").should("have.text", "Learn React");
       cy.get(`.filters a[href="#/"]`).should("not.have.class", "selected");
       cy.get(`.filters a[href="#/active"]`).should(
           "not.have.class",
