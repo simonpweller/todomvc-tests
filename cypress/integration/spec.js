@@ -214,7 +214,8 @@ describe(`persistence`, () => {
   });
 
   it(`should not persist edit mode across reloads`, () => {
-    cy.get(".toggle").first().click().click(); // give Cypress a chance to re-populate local storage
+    cy.get(".toggle").first().click(); // give Cypress a chance to re-populate local storage
+    cy.get(".toggle").first().click();
     cy.get(".todo-list label").first().dblclick();
 
     cy.get(".todo-list li").first().should("have.class", "editing");
