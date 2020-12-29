@@ -7,7 +7,7 @@ describe(`No todos`, () => {
 });
 
 describe(`New todo`, () => {
-  it(`should focus the input element when the page is loaded`, () => {
+  it.skip(`should focus the input element when the page is loaded`, () => {
     cy.get(".new-todo").should("have.focus");
   });
 
