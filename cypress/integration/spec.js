@@ -7,7 +7,7 @@ describe(`No todos`, () => {
 });
 
 describe(`New todo`, () => {
-  it.skip(`should focus the input element when the page is loaded`, () => {
+  it(`should focus the input element when the page is loaded`, () => {
     cy.get(".new-todo").should("have.focus");
   });
 
@@ -108,7 +108,7 @@ describe(`counter`, () => {
     cy.get(".todo-count").contains("1 item left");
   });
 
-  it(`should read "2 item left" if there are two active items`, () => {
+  it(`should read "2 items left" if there are two active items`, () => {
     cy.get(".toggle").eq(1).click();
     cy.get(".todo-count").contains("2 items left");
   });
@@ -205,6 +205,8 @@ describe(`editing mode`, () => {
 describe(`persistence`, () => {
   it(`should persist todos across reloads`, () => {
     cy.get(".new-todo").type("Learn React ").blur();
+    cy.get(".todo-list").find("li").should("have.length", 2);
+
     cy.get(".toggle").last().click();
 
     cy.visit("/");
